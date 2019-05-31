@@ -1,5 +1,4 @@
-// ATM.java
-// Represents an automated teller machine
+package main;
 
 public class ATM 
 {
@@ -10,13 +9,11 @@ public class ATM
    private CashDispenser cashDispenser; // ATM's cash dispenser
    private DepositSlot depositSlot; // ATM's deposit slot
    private BankDatabase bankDatabase; // account information database
+   private static UI ui;
 
-   // constants corresponding to main menu options
-   private static final int BALANCE_INQUIRY = 1;
-   private static final int WITHDRAWAL = 2;
-   private static final int DEPOSIT = 3;
-   private static final int EXIT = 4;
-
+   public static void main(Strings[] args) {
+      ATM.
+   }
    // no-argument ATM constructor initializes instance variables
    public ATM() 
    {
@@ -122,46 +119,4 @@ public class ATM
       screen.displayMessage("Enter a choice: ");
       return keypad.getInput(); // return user's selection
    } // end method displayMainMenu
-         
-   // return object of specified Transaction subclass
-   private Transaction createTransaction(int type)
-   {
-      Transaction temp = null; // temporary Transaction variable
-      
-      // determine which type of Transaction to create     
-      switch (type)
-      {
-         case BALANCE_INQUIRY: // create new BalanceInquiry transaction
-            temp = new BalanceInquiry(
-               currentAccountNumber, screen, bankDatabase);
-            break;
-         case WITHDRAWAL: // create new Withdrawal transaction
-            temp = new Withdrawal(currentAccountNumber, screen, 
-               bankDatabase, keypad, cashDispenser);
-            break; 
-         case DEPOSIT: // create new Deposit transaction
-            temp = new Deposit(currentAccountNumber, screen, 
-               bankDatabase, keypad, depositSlot);
-            break;
-      } // end switch
-
-      return temp; // return the newly created object
-   } // end method createTransaction
-} // end class ATM
-
-
-
-/**************************************************************************
- * (C) Copyright 1992-2014 by Deitel & Associates, Inc. and               *
- * Pearson Education, Inc. All Rights Reserved.                           *
- *                                                                        *
- * DISCLAIMER: The authors and publisher of this book have used their     *
- * best efforts in preparing the book. These efforts include the          *
- * development, research, and testing of the theories and programs        *
- * to determine their effectiveness. The authors and publisher make       *
- * no warranty of any kind, expressed or implied, with regard to these    *
- * programs or to the documentation contained in these books. The authors *
- * and publisher shall not be liable in any event for incidental or       *
- * consequential damages in connection with, or arising out of, the       *
- * furnishing, performance, or use of these programs.                     *
- *************************************************************************/
+}
