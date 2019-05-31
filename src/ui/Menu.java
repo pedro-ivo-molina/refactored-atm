@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import main.ATM;
 import main.UI;
+import Screen;
 import service.Deposit;
 import service.Transaction;
 import service.Withdrawal;
@@ -48,6 +49,9 @@ public class Menu implements UI {
            temp = new Deposit(currentAccountNumber, screen, 
               bankDatabase, keypad, depositSlot);
            break;
+         case EXIT:
+            screen.displayMessageLine("Exiting");
+            break;
      } // end switch
 
      return temp; // return the newly created object
