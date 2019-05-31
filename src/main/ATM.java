@@ -10,10 +10,7 @@ public class ATM
    private DepositSlot depositSlot; // ATM's deposit slot
    private BankDatabase bankDatabase; // account information database
    private static UI ui;
-
-   public static void main(Strings[] args) {
-      ATM.
-   }
+   
    // no-argument ATM constructor initializes instance variables
    public ATM() 
    {
