@@ -31,5 +31,12 @@ public class Menu implements UI
   {
 	 atm.executeTransaction(type);
   }
+
+  /** NÃO ESQUECER DE FAZER UM MÉTODO QUE VAI PEGAR ESSA PORRA!!!!!!!!!!!!!!!!!!!!!!!!!!
+  System.out.displayMessage("\nPlease enter your account number: ");
+  int accountNumber = keypad.getInput();
+  screen.displayMessage("\nEnter your PIN: ");
+  int pin = keypad.getInput();
+  */
 }
 

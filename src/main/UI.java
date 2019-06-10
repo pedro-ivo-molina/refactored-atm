@@ -1,5 +1,5 @@
 package main;
 
 public interface UI {
-	void menu();
+	int menu();
 }
