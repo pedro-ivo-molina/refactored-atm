@@ -1,8 +1,6 @@
-// BankDatabase.java
-// Represents the bank account information database 
+package controller;
 
-public class BankDatabase
-{
+public class BankDatabase{
    private Account accounts[]; // array of Accounts
    
    // no-argument BankDatabase constructor initializes accounts

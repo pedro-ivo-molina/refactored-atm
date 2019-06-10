@@ -1,7 +1,6 @@
 package service;
 
-public class ATM 
-{
+public class ATM{
    private boolean userAuthenticated;
    private int currentAccountNumber;
    private Screen screen;
@@ -11,32 +10,21 @@ public class ATM
    private BankDatabase bankDatabase;
    private static UI ui;
    
-   public ATM() 
-   {
-      userAuthenticated = false; // user is not authenticated to start
-      currentAccountNumber = 0; // no current account number to start
-      keypad = new Keypad(); // create keypad 
-      cashDispenser = new CashDispenser(); // create cash dispenser
-      depositSlot = new DepositSlot(); // create deposit slot
-      bankDatabase = new BankDatabase(); // create acct info database
-   } // end no-argument ATM constructor
+   public ATM(){
+      userAuthenticated = false;
+      currentAccountNumber = 0;
+      keypad = new Keypad(); 
+      cashDispenser = new CashDispenser();
+      depositSlot = new DepositSlot();
+      bankDatabase = new BankDatabase();
+   } 
 
-   // start ATM 
-   public void run()
-   {
-      // welcome and authenticate user; perform transactions
+   public void run(){
       while (true)
       {
-         // loop while user is not yet authenticated
-         while (!userAuthenticated) 
-         {
-            screen.displayMessageLine("\nWelcome!");       
-            authenticateUser(); // authenticate user
-         } // end while
-         
-         performTransactions(); // user is now authenticated 
-         userAuthenticated = false; // reset before next ATM session
-         currentAccountNumber = 0; // reset before next ATM session 
+         performTransactions();
+         userAuthenticated = false;
+         currentAccountNumber = 0;
          screen.displayMessageLine("\nThank you! Goodbye!");
       } 
    }
@@ -53,25 +41,21 @@ public class ATM
       }
    } 
 
-   public boolean validatePIN(int userAccountNumber, int userPIN)
-   {
+   public boolean validatePIN(int userAccountNumber, int userPIN){
       Account userAccount = bankDatabase.getAccount(userAccountNumber);
 
       return userAccount != null && userPIN == userAccount.getPin();
    }
 
-   private void performTransactions() 
-   {
+   private void performTransactions(){
       Transaction currentTransaction = null;
       
       boolean userExited = false;
 
-      while (!userExited)
-      {     
+      while (!userExited){     
          int mainMenuSelection = displayMainMenu();
 
-         switch (mainMenuSelection)
-         {
+         switch (mainMenuSelection){
             case BALANCE_INQUIRY: 
             case WITHDRAWAL: 
             case DEPOSIT:
@@ -85,8 +69,7 @@ public class ATM
                userExited = true;
                break;
             default:
-               screen.displayMessageLine(
-                  "\nYou did not enter a valid selection. Try again.");
+               screen.displayMessageLine("\nYou did not enter a valid selection. Try again.");
                break;
          }
       }

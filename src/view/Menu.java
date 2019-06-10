@@ -37,6 +37,9 @@ public class Menu implements UI
   int accountNumber = keypad.getInput();
   screen.displayMessage("\nEnter your PIN: ");
   int pin = keypad.getInput();
+
+  screen.displayMessageLine("\nWelcome!");       
+  authenticateUser(); // authenticate user
   */
 }
 
