@@ -1,38 +1,29 @@
-// CashDispenser.java
-// Represents the cash dispenser of the ATM
+package controller;
 
-public class CashDispenser 
-{
-   // the default initial number of bills in the cash dispenser
+public class CashDispenser {
    private final static int INITIAL_COUNT = 500;
-   private int count; // number of $20 bills remaining
+   private int count;
    
-   // no-argument CashDispenser constructor initializes count to default
-   public CashDispenser()
-   {
-      count = INITIAL_COUNT; // set count attribute to default
-   } // end CashDispenser constructor
+   public CashDispenser(){
+      count = INITIAL_COUNT;
+   }
 
-   // simulates dispensing of specified amount of cash
    public void dispenseCash(int amount)
    {
-      int billsRequired = amount / 20; // number of $20 bills required
-      count -= billsRequired; // update the count of bills
-   } // end method dispenseCash
+      int billsRequired = amount / 20;
+      count -= billsRequired;
+   }
 
-   // indicates whether cash dispenser can dispense desired amount
-   public boolean isSufficientCashAvailable(int amount)
-   {
-      int billsRequired = amount / 20; // number of $20 bills required
+   public boolean isSufficientCashAvailable(int amount){
+      int billsRequired = amount / 20;
 
       if (count >= billsRequired )
-         return true; // enough bills available
+         return true;
       else 
-         return false; // not enough bills available
-   } // end method isSufficientCashAvailable
+         return false;
+   }
 
-   public boolean isEnvelopeReceived()
-   {
-      return true; // deposit envelope was received
+   public boolean isEnvelopeReceived(){
+      return true;
    }
 }

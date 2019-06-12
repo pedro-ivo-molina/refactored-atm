@@ -1,8 +1,9 @@
-package ui;
+package view;
 
-import main.ATM;
+import controller.ATM;
 import main.UI;
-import Keypad;
+import view.Keypad;
+import controller.Transaction;
 
 
 public class Menu implements UI {

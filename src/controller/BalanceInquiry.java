@@ -1,33 +1,25 @@
 package controller;
 
-public class BalanceInquiry extends Transaction
-{
-   // BalanceInquiry constructor
-   public BalanceInquiry(int userAccountNumber, Screen atmScreen, BankDatabase atmBankDatabase){
-      super(userAccountNumber, atmScreen, atmBankDatabase);
-   } // end BalanceInquiry constructor
+public class BalanceInquiry extends Transaction{
+   public BalanceInquiry(int userAccountNumber, BankDatabase atmBankDatabase){
+      super(userAccountNumber, atmBankDatabase);
+   }
 
-   // performs the transaction
    @Override
    public void execute(){
-      // get references to bank database and screen
+
       BankDatabase bankDatabase = getBankDatabase();
-      Screen screen = getScreen();
 
-      // get the available balance for the account involved
-      double availableBalance = 
-         bankDatabase.getAvailableBalance(getAccountNumber());
+      double availableBalance = bankDatabase.getAvailableBalance(getAccountNumber());
 
-      // get the total balance for the account involved
-      double totalBalance = 
-         bankDatabase.getTotalBalance(getAccountNumber());
+      double totalBalance = bankDatabase.getTotalBalance(getAccountNumber());
       
-      // display the balance information on the screen
+      //mandar essa porra pro menu
       screen.displayMessageLine("\nBalance Information:");
       screen.displayMessage(" - Available balance: "); 
       screen.displayDollarAmount(availableBalance);
       screen.displayMessage("\n - Total balance:     ");
       screen.displayDollarAmount(totalBalance);
       screen.displayMessageLine("");
-   } // end method execute
+   }
 }

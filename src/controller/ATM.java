@@ -1,12 +1,13 @@
-package service;
+package controller;
+
+import view.Keypad;
+import main.UI;
+import controller.CashDispenser;
 
 public class ATM{
    private boolean userAuthenticated;
    private int currentAccountNumber;
-   private Screen screen;
    private Keypad keypad;
-   private CashDispenser cashDispenser;
-   private DepositSlot depositSlot;
    private BankDatabase bankDatabase;
    private static UI ui;
    
@@ -15,9 +16,8 @@ public class ATM{
       currentAccountNumber = 0;
       keypad = new Keypad(); 
       cashDispenser = new CashDispenser();
-      depositSlot = new DepositSlot();
       bankDatabase = new BankDatabase();
-   } 
+   }
 
    public void run(){
       while (true)
