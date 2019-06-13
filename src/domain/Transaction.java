@@ -20,5 +20,5 @@ public abstract class Transaction {
       return bankDatabase;
    }
 
-   abstract public void execute();
+   abstract public int execute();
 }

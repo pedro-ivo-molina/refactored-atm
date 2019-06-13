@@ -1,66 +1,44 @@
 package domain;
 
+import constants.Messages;
 import service.BankDatabase;
-import service.WithdrawalServiceImpl;
 import ui.WithdrawalService;
 import ui.ScreenService;
 import factory.ServiceFactory;
 
 public class Withdrawal extends Transaction {
-   private int amount;
    private WithdrawalService withdrawalService;
    private CashDispenser cashDispenser; 
    private BankDatabase bankDatabase;
-   private ScreenService screenService;
    private final static int CANCELED = 6;
 
-   public Withdrawal(int userAccountNumber, 
-      BankDatabase atmBankDatabase, Keypad atmKeypad, 
-      CashDispenser atmCashDispenser) {
+   public Withdrawal(int userAccountNumber, BankDatabase atmBankDatabase, CashDispenser atmCashDispenser) {
       super(userAccountNumber, atmBankDatabase);
       
       bankDatabase = getBankDatabase();
       cashDispenser = atmCashDispenser;
-      screenService = ServiceFactory.getScreenService();
       withdrawalService = ServiceFactory.getWithdrawalService();
    } 
    
-   public void execute() {
-      boolean cashDispensed = false;
-      double availableBalance; 
-      
-      
+   public int execute() {
+      double availableBalance;
+      int amount = withdrawalService.displayMenuOfAmounts();
 
-      do {
-         amount = withdrawalService.displayMenuOfAmounts();
-         
-         if (amount != CANCELED) {
-            availableBalance = 
-               bankDatabase.getAvailableBalance(getAccountNumber());
-      
-            if (amount <= availableBalance) {   
-               if (cashDispenser.isSufficientCashAvailable(amount)) {
-                  bankDatabase.debit(getAccountNumber(), amount);
-                  
-                  cashDispenser.dispenseCash(amount);
-                  cashDispensed = true;
+      if (amount != CANCELED) {
+         availableBalance = bankDatabase.getAvailableBalance(getAccountNumber());
 
-                  screenService.displayMessageLine("\nYour cash has been" +
-                     " dispensed. Please take your cash now.");
-               } else
-                  screenService.displayMessageLine(
-                     "\nInsufficient cash available in the ATM." +
-                     "\n\nPlease choose a smaller amount.");
-            } else {
-               screenService.displayMessageLine(
-                  "\nInsufficient funds in your account." +
-                  "\n\nPlease choose a smaller amount."); 
+         if (amount <= availableBalance) {
+            if (cashDispenser.isSufficientCashAvailable(amount)) {
+               bankDatabase.debit(getAccountNumber(), amount);
+
+               cashDispenser.dispenseCash(amount);
+
+               return Messages.CASH_DISPENSED.ordinal();
             }
-         } else {
-            screenService.displayMessageLine("\nCanceling transaction...");
-            return;
+            return Messages.INSUFFICIENT_CASH_ATM.ordinal();
          }
-      } while (!cashDispensed);
-
+         return Messages.INSUFFICIENT_FUNDS.ordinal();
+      }
+      return Messages.TRANSACTION_CANCELED.ordinal();
    }
 }
