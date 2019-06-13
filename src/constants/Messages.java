@@ -19,9 +19,10 @@ public enum Messages {
         return message;
     }
 
-    public Messages getById(int id){
+    public static Messages getById(int id){
         for(Messages message : values())
             if(message.ordinal() == id)
                 return message;
+        return null;
     }
 }
