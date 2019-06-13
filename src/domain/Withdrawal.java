@@ -3,7 +3,6 @@ package domain;
 import constants.Messages;
 import service.BankDatabase;
 import ui.WithdrawalService;
-import ui.ScreenService;
 import factory.ServiceFactory;
 
 public class Withdrawal extends Transaction {

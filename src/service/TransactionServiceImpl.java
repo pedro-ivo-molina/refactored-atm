@@ -5,7 +5,6 @@ import domain.Transaction;
 import domain.Withdrawal;
 import domain.CashDispenser;
 import domain.DepositSlot;
-import domain.Keypad;
 import ui.ScreenService;
 import ui.TransactionService;
 
@@ -18,14 +17,12 @@ public class TransactionServiceImpl implements TransactionService {
 	private CashDispenser cashDispenser;
 	private DepositSlot depositSlot;
 	private ScreenService screenService;
-	private Keypad keypad;
 	
 	public TransactionServiceImpl(){
 		bankDatabase = new BankDatabase();
 		cashDispenser = new CashDispenser();
 		depositSlot = new DepositSlot();
 		screenService = new ScreenServiceImpl();
-		keypad = new Keypad();
 	}
 	
 	public int executeTransaction(int type, int currentAccountNumber){
