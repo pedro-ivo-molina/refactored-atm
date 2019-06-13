@@ -1,4 +1,8 @@
 # refactored-atm
+Nome: Pedro Molina
+Matrícula: 201610919
+Matéria: Arquitetura de Software I
+
 O processo de refatoração desse projeto começou com a escolha da CleanArchitecture como padrão da aplicação.
 
 O motivo da escolha dessa arquitetura foi pra mander as lógicas de negócio isoladas do resto, se comunicando somente via chamadas com os serviços. Cada serviço basicamente tem sua interface, assim diminuindo o acoplamento.
