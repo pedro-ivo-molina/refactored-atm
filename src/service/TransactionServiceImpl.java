@@ -28,7 +28,7 @@ public class TransactionServiceImpl implements TransactionService {
 		keypad = new Keypad();
 	}
 	
-	public void executeTransaction(int type, int currentAccountNumber){
+	public int executeTransaction(int type, int currentAccountNumber){
       Transaction transaction = null;
       
       switch (type){
@@ -43,6 +43,6 @@ public class TransactionServiceImpl implements TransactionService {
         	 break;
       }
 
-      transaction.execute();
+      return transaction.execute();
     }
 }

@@ -83,7 +83,9 @@ public class ATM {
                 break;
             case WITHDRAWAL: 
             case DEPOSIT:
-               transactionService.executeTransaction(mainMenuSelection, currentAccountNumber);
+               int messageCode = transactionService.executeTransaction(mainMenuSelection, currentAccountNumber);
+               Messages message = Messages.getById(messageCode);
+               screenService.displayMessageLine(message.getMessage());
                break; 
             case EXIT:
                screenService.displayMessageLine("\nExiting the system...");

@@ -18,4 +18,10 @@ public enum Messages {
     public String getMessage(){
         return message;
     }
+
+    public Messages getById(int id){
+        for(Messages message : values())
+            if(message.ordinal() == id)
+                return message;
+    }
 }
