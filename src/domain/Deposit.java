@@ -1,5 +1,6 @@
 package domain;
 
+import constants.Messages;
 import service.BankDatabase;
 import ui.ScreenService;
 import ui.DepositService;
@@ -23,14 +24,13 @@ public class Deposit extends Transaction
       depositService = ServiceFactory.getDepositService();
    }
 
-   public void execute()
+   public int execute()
    {
       BankDatabase bankDatabase = getBankDatabase();
 
       amount = depositService.promptForDepositAmount();
 
-      if (amount != CANCELED)
-      {
+      if (amount != CANCELED) {
          screenService.displayMessage(
             "\nPlease insert a deposit envelope containing ");
          screenService.displayDollarAmount(amount);
@@ -38,20 +38,13 @@ public class Deposit extends Transaction
 
          boolean envelopeReceived = depositSlot.isEnvelopeReceived();
 
-         if (envelopeReceived)
-         {  
-            screenService.displayMessageLine("\nYour envelope has been " + 
-               "received.\nNOTE: The money just deposited will not " + 
-               "be available until we verify the amount of any " +
-               "enclosed cash and your checks clear.");
-            
-            bankDatabase.credit(getAccountNumber(), amount); 
-         } else {
-            screenService.displayMessageLine("\nYou did not insert an " +
-               "envelope, so the ATM has canceled your transaction.");
+         if (envelopeReceived) {
+            bankDatabase.credit(getAccountNumber(), amount);
+            return Messages.ENVELOPE_RECEIVED.ordinal();
          }
-      } else {
-         screenService.displayMessageLine("\nCanceling transaction...");
+
+         return Messages.NO_ENVELOPE.ordinal();
       }
+      return Messages.TRANSACTION_CANCELED.ordinal();
    }
 } 

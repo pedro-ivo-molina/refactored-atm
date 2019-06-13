@@ -1,6 +1,7 @@
 package ui;
 
 import domain.Keypad;
+import factory.ServiceFactory;
 import service.ScreenServiceImpl;
 import service.AccountServiceImpl;
 import service.TransactionServiceImpl;
@@ -8,7 +9,7 @@ import service.TransactionServiceImpl;
 
 public class ATM {
    private boolean userAuthenticated;
-   private ScreenService screen;
+   private ScreenService screenService;
    private Keypad keypad;
    private AccountService accountService;
    private TransactionService transactionService;
@@ -23,7 +24,7 @@ public class ATM {
 
    public ATM() {
       userAuthenticated = false;
-      screen = new ScreenServiceImpl();
+      screenService = ServiceFactory.getScreenService();
       keypad = new Keypad();
       accountService = new AccountServiceImpl();
       transactionService = new TransactionServiceImpl();
@@ -35,21 +36,21 @@ public class ATM {
       {
          while (!userAuthenticated) 
          {
-            screen.displayMessageLine("\nWelcome!");       
+            screenService.displayMessageLine("\nWelcome!");
             authenticateUser();
          }
          
          performTransactions();
          userAuthenticated = false;
-         screen.displayMessageLine("\nThank you! Goodbye!");
+         screenService.displayMessageLine("\nThank you! Goodbye!");
       } 
    }
 
    private void authenticateUser() 
    {
-      screen.displayMessage("\nPlease enter your account number: ");
+      screenService.displayMessage("\nPlease enter your account number: ");
       int accountNumber = keypad.getInput();
-      screen.displayMessage("\nEnter your PIN: ");
+      screenService.displayMessage("\nEnter your PIN: ");
       int pin = keypad.getInput();
 
       userAuthenticated = accountService.authenticateUser(accountNumber, pin);
@@ -57,7 +58,7 @@ public class ATM {
       if(userAuthenticated){
     	  currentAccountNumber = accountNumber;
       } else{
-    	  screen.displayMessageLine("Error! You must enter a valid account number!");    	  
+    	  screenService.displayMessageLine("Error! You must enter a valid account number!");
       }
    }
    
@@ -70,17 +71,25 @@ public class ATM {
 
          switch (mainMenuSelection)
          {
-            case BALANCE_INQUIRY: 
+            case BALANCE_INQUIRY:
+                double availableBalance = accountService.getAvailableBalance(currentAccountNumber);
+                double totalBalance = accountService.getTotalBalance(currentAccountNumber);
+                screenService.displayMessageLine("\nBalance Information:");
+                screenService.displayMessage(" - Available balance: ");
+                screenService.displayDollarAmount(availableBalance);
+                screenService.displayMessage("\n - Total balance:     ");
+                screenService.displayDollarAmount(totalBalance);
+                screenService.displayMessageLine("");
             case WITHDRAWAL: 
             case DEPOSIT:
                transactionService.executeTransaction(mainMenuSelection, currentAccountNumber);
                break; 
             case EXIT:
-               screen.displayMessageLine("\nExiting the system...");
+               screenService.displayMessageLine("\nExiting the system...");
                userExited = true;
                break;
             default:
-               screen.displayMessageLine(
+               screenService.displayMessageLine(
                   "\nYou did not enter a valid selection. Try again.");
                break;
          }
@@ -88,12 +97,12 @@ public class ATM {
    }
    
    private int displayMainMenu(){
-      screen.displayMessageLine("\nMain menu:");
-      screen.displayMessageLine("1 - View my balance");
-      screen.displayMessageLine("2 - Withdraw cash");
-      screen.displayMessageLine("3 - Deposit funds");
-      screen.displayMessageLine("4 - Exit\n");
-      screen.displayMessage("Enter a choice: ");
+      screenService.displayMessageLine("\nMain menu:");
+      screenService.displayMessageLine("1 - View my balance");
+      screenService.displayMessageLine("2 - Withdraw cash");
+      screenService.displayMessageLine("3 - Deposit funds");
+      screenService.displayMessageLine("4 - Exit\n");
+      screenService.displayMessage("Enter a choice: ");
       return keypad.getInput();
    }
    
@@ -126,7 +135,7 @@ public class ATM {
 	              userChoice = CANCELED;
 	              break;
 	           default:
-	              screen.displayMessageLine(
+	              screenService.displayMessageLine(
 	                  "\nInvalid selection. Try again.");
 	         }
 	      }

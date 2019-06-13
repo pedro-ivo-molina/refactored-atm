@@ -1,18 +1,15 @@
 package service;
 
-import domain.BalanceInquiry;
 import domain.Deposit;
 import domain.Transaction;
 import domain.Withdrawal;
 import domain.CashDispenser;
 import domain.DepositSlot;
 import domain.Keypad;
-import service.BankDatabase;
 import ui.ScreenService;
 import ui.TransactionService;
 
 public class TransactionServiceImpl implements TransactionService {
-	private static final int BALANCE_INQUIRY = 1;
 	private static final int WITHDRAWAL = 2;
 	private static final int DEPOSIT = 3;
 	private static final int EXIT = 4;
@@ -35,12 +32,8 @@ public class TransactionServiceImpl implements TransactionService {
       Transaction transaction = null;
       
       switch (type){
-         case BALANCE_INQUIRY:
-            transaction = new BalanceInquiry(
-               currentAccountNumber, screenService, bankDatabase);
-            break;
          case WITHDRAWAL:
-            transaction = new Withdrawal(currentAccountNumber, bankDatabase, keypad, cashDispenser);
+            transaction = new Withdrawal(currentAccountNumber, bankDatabase, cashDispenser);
             break; 
          case DEPOSIT:
             transaction = new Deposit(currentAccountNumber, screenService, 
