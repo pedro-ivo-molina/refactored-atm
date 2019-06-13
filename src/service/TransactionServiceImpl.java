@@ -37,7 +37,7 @@ public class TransactionServiceImpl implements TransactionService {
             break; 
          case DEPOSIT:
             transaction = new Deposit(currentAccountNumber, screenService, 
-               bankDatabase, keypad, depositSlot);
+               bankDatabase, depositSlot);
             break;
          case EXIT:
         	 break;

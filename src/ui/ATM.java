@@ -20,7 +20,7 @@ public class ATM {
    private static final int WITHDRAWAL = 2;
    private static final int DEPOSIT = 3;
    private static final int EXIT = 4;
-   private final static int CANCELED = 6;
+   private final static int CANCELED = 0;
 
    public ATM() {
       userAuthenticated = false;
@@ -112,14 +112,14 @@ public class ATM {
 	    int[] amounts = {0, 20, 40, 60, 100, 200};
 
 	    while (userChoice == 0) {
-	    	screenService.displayMessageLine("\nWithdrawal Menu:");
-	        screenService.displayMessageLine("1 - $20");
-	        screenService.displayMessageLine("2 - $40");
-	        screenService.displayMessageLine("3 - $60");
-	        screenService.displayMessageLine("4 - $100");
-	        screenService.displayMessageLine("5 - $200");
-	        screenService.displayMessageLine("6 - Cancel transaction");
-	        screenService.displayMessage("\nChoose a withdrawal amount: ");
+	    	screen.displayMessageLine("\nWithdrawal Menu:");
+	        screen.displayMessageLine("1 - $20");
+	        screen.displayMessageLine("2 - $40");
+	        screen.displayMessageLine("3 - $60");
+	        screen.displayMessageLine("4 - $100");
+	        screen.displayMessageLine("5 - $200");
+	        screen.displayMessageLine("0 - Cancel transaction");
+	        screen.displayMessage("\nChoose a withdrawal amount: ");
 
 	        int input = keypad.getInput();
 	         
@@ -141,5 +141,17 @@ public class ATM {
 	      }
 
 	    return userChoice;
+   }
+   
+   public double promptForDepositAmount() {
+      
+      screen.displayMessage("\nPlease enter a deposit amount in " + 
+         "(or 0 to cancel): ");
+      int input = keypad.getInput();
+      
+      if (input == CANCELED) 
+         return CANCELED;
+      else
+         return (double) input; 
    }
 }

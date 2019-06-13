@@ -3,30 +3,32 @@ package domain;
 import constants.Messages;
 import service.BankDatabase;
 import ui.ScreenService;
+import ui.DepositService;
+import factory.ServiceFactory;
 
 public class Deposit extends Transaction
 {
    private double amount;
-   private Keypad keypad;
    private DepositSlot depositSlot;
    private ScreenService screenService;
+   private DepositService depositService;
    private final static int CANCELED = 0;
 
    public Deposit(int userAccountNumber, ScreenService atmScreen, 
-      BankDatabase atmBankDatabase, Keypad atmKeypad, 
+      BankDatabase atmBankDatabase, 
       DepositSlot atmDepositSlot){
       super(userAccountNumber, atmBankDatabase);
 
-      keypad = atmKeypad;
       depositSlot = atmDepositSlot;
       screenService = atmScreen;
+      depositService = ServiceFactory.getDepositService();
    }
 
    public int execute()
    {
       BankDatabase bankDatabase = getBankDatabase();
 
-      amount = promptForDepositAmount();
+      amount = depositService.promptForDepositAmount();
 
       if (amount != CANCELED) {
          screenService.displayMessage(
@@ -44,17 +46,5 @@ public class Deposit extends Transaction
          return Messages.NO_ENVELOPE.ordinal();
       }
       return Messages.TRANSACTION_CANCELED.ordinal();
-   }
-   
-   private double promptForDepositAmount() {
-      
-      screenService.displayMessage("\nPlease enter a deposit amount in " + 
-         "CENTS (or 0 to cancel): ");
-      int input = keypad.getInput();
-      
-      if (input == CANCELED) 
-         return CANCELED;
-      else
-         return (double) input / 100; 
    }
 } 
