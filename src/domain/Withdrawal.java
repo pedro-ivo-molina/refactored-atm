@@ -1,7 +1,6 @@
 package domain;
 
 import service.BankDatabase;
-import service.WithdrawalServiceImpl;
 import ui.WithdrawalService;
 import ui.ScreenService;
 import factory.ServiceFactory;

@@ -19,7 +19,7 @@ public class ATM {
    private static final int WITHDRAWAL = 2;
    private static final int DEPOSIT = 3;
    private static final int EXIT = 4;
-   private final static int CANCELED = 6;
+   private final static int CANCELED = 0;
 
    public ATM() {
       userAuthenticated = false;
@@ -109,7 +109,7 @@ public class ATM {
 	        screen.displayMessageLine("3 - $60");
 	        screen.displayMessageLine("4 - $100");
 	        screen.displayMessageLine("5 - $200");
-	        screen.displayMessageLine("6 - Cancel transaction");
+	        screen.displayMessageLine("0 - Cancel transaction");
 	        screen.displayMessage("\nChoose a withdrawal amount: ");
 
 	        int input = keypad.getInput();
@@ -132,5 +132,17 @@ public class ATM {
 	      }
 
 	    return userChoice;
+   }
+   
+   public double promptForDepositAmount() {
+      
+      screen.displayMessage("\nPlease enter a deposit amount in " + 
+         "(or 0 to cancel): ");
+      int input = keypad.getInput();
+      
+      if (input == CANCELED) 
+         return CANCELED;
+      else
+         return (double) input; 
    }
 }
