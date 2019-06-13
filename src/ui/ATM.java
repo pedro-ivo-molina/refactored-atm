@@ -80,6 +80,7 @@ public class ATM {
                 screenService.displayMessage("\n - Total balance:     ");
                 screenService.displayDollarAmount(totalBalance);
                 screenService.displayMessageLine("");
+                break;
             case WITHDRAWAL: 
             case DEPOSIT:
                transactionService.executeTransaction(mainMenuSelection, currentAccountNumber);
@@ -112,14 +113,14 @@ public class ATM {
 	    int[] amounts = {0, 20, 40, 60, 100, 200};
 
 	    while (userChoice == 0) {
-	    	screen.displayMessageLine("\nWithdrawal Menu:");
-	        screen.displayMessageLine("1 - $20");
-	        screen.displayMessageLine("2 - $40");
-	        screen.displayMessageLine("3 - $60");
-	        screen.displayMessageLine("4 - $100");
-	        screen.displayMessageLine("5 - $200");
-	        screen.displayMessageLine("0 - Cancel transaction");
-	        screen.displayMessage("\nChoose a withdrawal amount: ");
+	    	  screenService.displayMessageLine("\nWithdrawal Menu:");
+	        screenService.displayMessageLine("1 - $20");
+	        screenService.displayMessageLine("2 - $40");
+	        screenService.displayMessageLine("3 - $60");
+	        screenService.displayMessageLine("4 - $100");
+	        screenService.displayMessageLine("5 - $200");
+	        screenService.displayMessageLine("0 - Cancel transaction");
+	        screenService.displayMessage("\nChoose a withdrawal amount: ");
 
 	        int input = keypad.getInput();
 	         
@@ -145,7 +146,7 @@ public class ATM {
    
    public double promptForDepositAmount() {
       
-      screen.displayMessage("\nPlease enter a deposit amount in " + 
+      screenService.displayMessage("\nPlease enter a deposit amount in " + 
          "(or 0 to cancel): ");
       int input = keypad.getInput();
       
