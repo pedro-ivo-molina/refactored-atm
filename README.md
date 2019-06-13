@@ -5,4 +5,6 @@ O motivo da escolha dessa arquitetura foi pra mander as lógicas de negócio iso
 
 Há também um pacote chamado Factory, onde nele há a inicialização de todos os serviços assim também diminuindo o acoplamento, pois ao invés de chamar os serviços os domínios chamam a Factory.
 
+O pacote de UI é a interface da ATM, ela se comunica com os serviços. Foi planejado que somente nela houvessem prints, então foi tentado isolar isso de todo o resto da aplicação.
+
 O objetivo dessa refatoração foi melhorar o código dessa aplicação mas mantendo suas funcionalidades principais e comportamento atual, ou seja, foi melhorado a forma que o projeto foi implementado.
