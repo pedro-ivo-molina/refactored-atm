@@ -8,92 +8,60 @@ public class Deposit extends Transaction
    private double amount;
    private Keypad keypad;
    private DepositSlot depositSlot;
+   private ScreenService screenService;
    private final static int CANCELED = 0;
 
    public Deposit(int userAccountNumber, ScreenService atmScreen, 
       BankDatabase atmBankDatabase, Keypad atmKeypad, 
       DepositSlot atmDepositSlot){
-      super(userAccountNumber, atmScreen, atmBankDatabase);
+      super(userAccountNumber, atmBankDatabase);
 
       keypad = atmKeypad;
       depositSlot = atmDepositSlot;
+      screenService = atmScreen;
    }
 
-   @Override
    public void execute()
    {
-      BankDatabase bankDatabase = getBankDatabase(); // get reference
-      ScreenService screen = getScreen(); // get reference
+      BankDatabase bankDatabase = getBankDatabase();
 
-      amount = promptForDepositAmount(); // get deposit amount from user
+      amount = promptForDepositAmount();
 
       if (amount != CANCELED)
       {
-         // request deposit envelope containing specified amount
-         screen.displayMessage(
+         screenService.displayMessage(
             "\nPlease insert a deposit envelope containing ");
-         screen.displayDollarAmount(amount);
-         screen.displayMessageLine(".");
+         screenService.displayDollarAmount(amount);
+         screenService.displayMessageLine(".");
 
-         // receive deposit envelope
          boolean envelopeReceived = depositSlot.isEnvelopeReceived();
 
-         // check whether deposit envelope was received
          if (envelopeReceived)
          {  
-            screen.displayMessageLine("\nYour envelope has been " + 
+            screenService.displayMessageLine("\nYour envelope has been " + 
                "received.\nNOTE: The money just deposited will not " + 
                "be available until we verify the amount of any " +
                "enclosed cash and your checks clear.");
             
-            // credit account to reflect the deposit
             bankDatabase.credit(getAccountNumber(), amount); 
-         } // end if
-         else // deposit envelope not received
-         {
-            screen.displayMessageLine("\nYou did not insert an " +
+         } else {
+            screenService.displayMessageLine("\nYou did not insert an " +
                "envelope, so the ATM has canceled your transaction.");
-         } // end else
-      } // end if 
-      else // user canceled instead of entering amount
-      {
-         screen.displayMessageLine("\nCanceling transaction...");
-      } // end else
-   } // end method execute
-
-   // prompt user to enter a deposit amount in cents 
-   private double promptForDepositAmount()
-   {
-      ScreenService screen = getScreen(); // get reference to screen
-
-      // display the prompt
-      screen.displayMessage("\nPlease enter a deposit amount in " + 
-         "CENTS (or 0 to cancel): ");
-      int input = keypad.getInput(); // receive input of deposit amount
+         }
+      } else {
+         screenService.displayMessageLine("\nCanceling transaction...");
+      }
+   }
+   
+   private double promptForDepositAmount() {
       
-      // check whether the user canceled or entered a valid amount
+      screenService.displayMessage("\nPlease enter a deposit amount in " + 
+         "CENTS (or 0 to cancel): ");
+      int input = keypad.getInput();
+      
       if (input == CANCELED) 
          return CANCELED;
       else
-      {
-         return (double) input / 100; // return dollar amount 
-      } // end else
-   } // end method promptForDepositAmount
-} // end class Deposit
-
-
-
-/**************************************************************************
- * (C) Copyright 1992-2014 by Deitel & Associates, Inc. and               *
- * Pearson Education, Inc. All Rights Reserved.                           *
- *                                                                        *
- * DISCLAIMER: The authors and publisher of this book have used their     *
- * best efforts in preparing the book. These efforts include the          *
- * development, research, and testing of the theories and programs        *
- * to determine their effectiveness. The authors and publisher make       *
- * no warranty of any kind, expressed or implied, with regard to these    *
- * programs or to the documentation contained in these books. The authors *
- * and publisher shall not be liable in any event for incidental or       *
- * consequential damages in connection with, or arising out of, the       *
- * furnishing, performance, or use of these programs.                     *
- *************************************************************************/
+         return (double) input / 100; 
+   }
+} 

@@ -3,36 +3,30 @@ package domain;
 import service.BankDatabase;
 import ui.ScreenService;
 
-public class BalanceInquiry extends Transaction
-{
-   // BalanceInquiry constructor
+public class BalanceInquiry extends Transaction {
+   private ScreenService screenService;
+   
    public BalanceInquiry(int userAccountNumber, ScreenService screen, 
-      BankDatabase atmBankDatabase)
-   {
-       super(userAccountNumber, screen, atmBankDatabase);
+      BankDatabase atmBankDatabase) {
+       super(userAccountNumber, atmBankDatabase);
+       
+       screenService = screen;
    } 
 
-   // performs the transaction
-   public void execute()
-   {
-      // get references to bank database and screen
+   public void execute() {
       BankDatabase bankDatabase = getBankDatabase();
-      ScreenService screen = getScreen();
 
-      // get the available balance for the account involved
       double availableBalance = 
          bankDatabase.getAvailableBalance(getAccountNumber());
 
-      // get the total balance for the account involved
       double totalBalance = 
          bankDatabase.getTotalBalance(getAccountNumber());
       
-      // display the balance information on the screen
-      screen.displayMessageLine("\nBalance Information:");
-      screen.displayMessage(" - Available balance: "); 
-      screen.displayDollarAmount(availableBalance);
-      screen.displayMessage("\n - Total balance:     ");
-      screen.displayDollarAmount(totalBalance);
-      screen.displayMessageLine("");
-   } // end method execute
+      screenService.displayMessageLine("\nBalance Information:");
+      screenService.displayMessage(" - Available balance: "); 
+      screenService.displayDollarAmount(availableBalance);
+      screenService.displayMessage("\n - Total balance:     ");
+      screenService.displayDollarAmount(totalBalance);
+      screenService.displayMessageLine("");
+   }
 }

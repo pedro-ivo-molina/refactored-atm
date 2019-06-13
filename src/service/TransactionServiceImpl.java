@@ -40,8 +40,7 @@ public class TransactionServiceImpl implements TransactionService {
                currentAccountNumber, screenService, bankDatabase);
             break;
          case WITHDRAWAL:
-            transaction = new Withdrawal(currentAccountNumber, screenService, 
-               bankDatabase, keypad, cashDispenser);
+            transaction = new Withdrawal(currentAccountNumber, bankDatabase, keypad, cashDispenser);
             break; 
          case DEPOSIT:
             transaction = new Deposit(currentAccountNumber, screenService, 
